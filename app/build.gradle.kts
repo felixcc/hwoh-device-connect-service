@@ -39,5 +39,6 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
-    implementation(libs.hwoh.device.connect.service)
+//    implementation(libs.hwoh.device.connect.service)
+    implementation("com.github.felixcc:hwoh-device-connect-service:v1.0.1")
 }
