@@ -8,7 +8,11 @@ package com.hwoh.device.connect
  */
 class ConnectService {
 
-    fun aa() {
+    companion object {
+        const val A: String = "felix"
+    }
 
+    fun aa() {
+        println("打印")
     }
 }
