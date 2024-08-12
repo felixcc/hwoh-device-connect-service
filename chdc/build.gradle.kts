@@ -10,32 +10,32 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
 
-                groupId = "com.example"
-                artifactId = "my-library"
-                version = android.defaultConfig.versionName
+                groupId = "com.hwoh.connect"
+                artifactId = "device-service"
+                version = "1.0.0"
 
                 pom {
-                    name.set("My Library")
+                    name.set("hwoh-device-connect-service")
                     description.set("A description of the library.")
-                    url.set("https://github.com/yourusername/your-repo")
+                    url.set("https://github.com/felixcc/hwoh-device-connect-service.git")
 
                     licenses {
                         license {
                             name.set("The Apache License, Version 2.0")
-                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
                         }
                     }
                     developers {
                         developer {
-                            id.set("your-username")
-                            name.set("Your Name")
-                            email.set("you@example.com")
+                            id.set("felixcc")
+                            name.set("felixchen")
+                            email.set("lovejiuwei@gmail.com")
                         }
                     }
                     scm {
-                        connection.set("scm:git:git://github.com/yourusername/your-repo.git")
-                        developerConnection.set("scm:git:ssh://github.com/yourusername/your-repo.git")
-                        url.set("https://github.com/yourusername/your-repo")
+                        connection.set("scm:git:git://github.com/felixcc/hwoh-device-connect-service.git")
+                        developerConnection.set("scm:git:ssh://github.com/felixcc/hwoh-device-connect-service.git")
+                        url.set("https://github.com/felixcc/hwoh-device-connect-service.git")
                     }
                 }
             }
@@ -44,7 +44,7 @@ afterEvaluate {
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/yourusername/your-repo")
+                url = uri("https://github.com/felixcc/hwoh-device-connect-service.git")
                 credentials {
                     username =
                         project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
