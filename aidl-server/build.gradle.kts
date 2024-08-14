@@ -1,10 +1,10 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
-    namespace = "com.hwoh.device.connect.service"
+    namespace = "com.hwoh.device.connect"
     compileSdk = 34
 
     buildFeatures {
@@ -12,13 +12,10 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.hwoh.device.connect.service"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -41,7 +38,4 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-
-//    implementation(libs.hwoh.device.connect.service)
 }

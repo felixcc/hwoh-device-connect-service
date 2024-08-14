@@ -25,3 +25,5 @@ dependencyResolutionManagement {
 rootProject.name = "hwoh-device-connect-service"
 include(":app")
 include(":chdc")
+
+include(":aidl-server")

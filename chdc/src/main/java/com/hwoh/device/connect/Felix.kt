@@ -8,6 +8,6 @@ package com.hwoh.device.connect
 class Felix {
 
     fun a() {
-        ConnectService.getInstance("uu").init()
+        ConnectService.getInstance("uu")
     }
 }
