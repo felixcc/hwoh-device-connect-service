@@ -5,7 +5,7 @@
               android:layout_height="match_parent">
 
   <Button
-      android:onClick="onAddClick"
+      android:onClick="onSayHelloClick"
       android:text="sayHello"
       android:layout_width="200dp"
       android:layout_height="100dp"/>

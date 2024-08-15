@@ -1,11 +1,14 @@
 package com.felix
 
 import android.app.Activity
-import android.content.Intent
+import android.content.ComponentName
+import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.RemoteException
+import android.os.IBinder
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.hwoh.device.connect.ServiceIntentBuilder
 import com.hwoh.device.connect.service.IDeviceConnectAidlInterface
 import com.hwoh.device.connect.service.R
 
@@ -17,34 +20,63 @@ import com.hwoh.device.connect.service.R
  */
 class Felix : Activity() {
 
-    private var mConnection: DeviceServiceConnection? = null
-    private val mService: IDeviceConnectAidlInterface? = null
+    private var mService: IDeviceConnectAidlInterface? = null
+    private var mConnection: ServiceConnection? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mConnection = DeviceServiceConnection()
-        bindService(Intent(this, IDeviceConnectAidlInterface::class.java), mConnection!!, BIND_AUTO_CREATE)
+        bind()
+    }
+
+    private fun bind() {
+        mConnection = object : ServiceConnection {
+            override fun onServiceConnected(
+                className: ComponentName,
+                service: IBinder
+            ) {
+                mService = IDeviceConnectAidlInterface.Stub.asInterface(service)
+                Toast.makeText(
+                    this@Felix, "remote_service_connected",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onServiceDisconnected(className: ComponentName) {
+                mService = null
+                Toast.makeText(
+                    this@Felix, "remote_service_disconnected",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        val bindingRequestedSuccessfully = bindService(
+            ServiceIntentBuilder.buildDeviceConnectBindIntent(),
+            mConnection!!,
+            BIND_AUTO_CREATE
+        )
+        Log.d("felix", "bindService:${bindingRequestedSuccessfully}")
     }
 
     fun onSayHelloClick(view: View?) {
-        if (mService != null) {
-            try {
-                mService.sayHello()
-            } catch (e: RemoteException) {
-                e.printStackTrace()
+        mService?.apply {
+            runCatching {
+                sayHello()
+            }.onSuccess {
+                Toast.makeText(this@Felix, "onSuccess", Toast.LENGTH_SHORT).show()
+            }.onFailure {
+                Toast.makeText(this@Felix, "onFailure", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     fun onAddClick(view: View?) {
-        if (mService != null) {
-            try {
-                val result = mService.add(1, 2)
-                Toast.makeText(this, "1 + 2 = $result", Toast.LENGTH_SHORT).show()
-            } catch (e: RemoteException) {
-                e.printStackTrace()
+        mService?.apply {
+            runCatching {
+                val result = add(1, 2)
+                Toast.makeText(this@Felix, "1 + 2 = $result", Toast.LENGTH_SHORT).show()
             }
         }
     }
